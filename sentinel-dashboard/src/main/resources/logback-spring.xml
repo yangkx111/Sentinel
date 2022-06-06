@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<property name="log.path" value="logs" />
+	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %replace(%caller{1}){'Caller.{1}0|\t at |\r|\n', ''}: %msg%n" />
+
+	<!--输出到debug -->
+	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/logback-debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<append>true</append>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+			<charset>utf-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter"><!-- 打印>=DEBUG日志 -->
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<!--输出到trace -->
+	<appender name="trace" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/logback-trace-%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<append>true</append>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+			<charset>utf-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印TRACE日志 -->
+			<level>TRACE</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- 控制台输出 appender -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${log.pattern}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+
+	<logger name="com.aii" level="${LOG_LEVEL:-debug}" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="trace" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="jdbc.sqltiming" level="info" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="jdbc.connection" level="error" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="jdbc.resultset" level="error" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="jdbc.audit" level="error" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="jdbc.sqlonly" level="off" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<root level="info" additivity="false">
+		<appender-ref ref="debug" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

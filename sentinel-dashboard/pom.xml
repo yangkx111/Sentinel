@@ -101,7 +101,6 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
-            <scope>test</scope>
         </dependency>
         <!-- for Apollo rule publisher sample -->
         <dependency>
@@ -130,10 +129,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-        	<groupId>com.github.stefanbirkner</groupId>
-        	<artifactId>system-rules</artifactId>
-        	<version>1.16.1</version>
-        	<scope>test</scope>
+            <groupId>com.github.stefanbirkner</groupId>
+            <artifactId>system-rules</artifactId>
+            <version>1.16.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -1,0 +1,41 @@
+server:
+  port: 9597
+  servlet:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+    session:
+      cookie:
+        name: sentinel_dashboard_cookie
+
+spring:
+  application:
+    name: sentinel-dashboard
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+
+auth:
+  filter:
+    exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version
+    exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
+
+  username: ${SENTINEL_DASHBOARD_USER}
+  password: ${SENTINEL_DASHBOARD_PASSWD}
+
+sentinel:
+  dashboard:
+    version: '@project.version@'
+  nacos:
+    server-addr: ${NACOS_DISCOVERY_ADDR}
+    namespace:
+    group-id: SENTINEL-GROUP
+project:
+  name: sentinel-dashboard
+csp:
+  sentinel:
+    dashboard:
+      server: 127.0.0.1:9597
